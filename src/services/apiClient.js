@@ -1,11 +1,11 @@
-const BASE_URL = 'https://dummyjson.cpm'
+const BASE_URL = 'https://dummyjson.com'
 
 export async function apiRequest(endpoint, options = {} ) {
     let response
 
     try {
         response = await fetch(`${BASE_URL}${endpoint}`, {
-            headers: { 'Content-Type': 'applicacion/json' },
+            headers: { 'Content-Type': 'application/json' },
             ...options,
         })
 
@@ -16,7 +16,7 @@ export async function apiRequest(endpoint, options = {} ) {
     const data = await response.json().catch(() => null ) 
 
     if (!response.ok ){
-        const error = new Error(data?.message || `oCurrio un error en la peticion (${response.status}).` )
+        const error = new Error(data?.message || `Ocurrio un error en la peticion (${response.status}).` )
         error.status = response.status
         throw error
     }
