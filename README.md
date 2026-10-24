@@ -3,8 +3,8 @@
 Mini sistema en React: login con DummyJSON, panel con sidebar/navbar y tabla de asesores con filtros, paginación y CRUD.
 
 ## Integrantes
-- (tu nombre) — @DaniielA5
-- (nombre de tu compañero) — @usuario
+- (Daniel Juarez) — @DaniielA5
+- ()
 
 ## API utilizada
 - Login: DummyJSON Auth (`https://dummyjson.com/auth/login`)
