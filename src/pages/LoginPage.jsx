@@ -13,7 +13,7 @@ function LoginPage({ onLoginSuccess }) {
   // true mientras se espera la respuesta; desactiva el botón
   const [isLoading, setIsLoading] = useState(false)
 
-  
+
   const validateFields = () => {
     const errors = {}
     if (!username.trim()) errors.username = 'Escribe tu usuario o correo.'
@@ -45,7 +45,7 @@ function LoginPage({ onLoginSuccess }) {
     <main className="login-page">
       {/* noValidate: desactiva las validaciones del navegador para usar las nuestras */}
       <form className="login-card" onSubmit={handleSubmit} noValidate>
-        <h1 className="login-title">Entra a tu cuenta</h1>
+        <h1 className="login-title">Iniciar sesión</h1>
         <p className="login-subtitle">Plataforma de asesorías</p>
 
         <label className="login-label" htmlFor="username">Usuario</label>
