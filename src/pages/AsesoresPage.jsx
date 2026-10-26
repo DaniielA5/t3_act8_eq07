@@ -1,11 +1,13 @@
+import { useState } from 'react'
 import { useAsesores } from '../hooks/useAsesores'
 import { useTableParams } from '../hooks/useTableParams'
 import AsesoresFilters from '../componentes/asesores/AsesoresFilters'
 import AsesoresTable from '../componentes/asesores/AsesoresTable'
+import AsesorForm from '../componentes/asesores/AsesorForm'
 import Pagination from '../componentes/asesores/Pagination'
 
 function AsesoresPage() {
-  const { asesores, isLoading, errorMessage, retryLoadAsesores } = useAsesores()
+  const { asesores, isLoading, errorMessage, retryLoadAsesores, addAsesor } = useAsesores()
   const {
     searchText,
     selectedArea,
@@ -17,7 +19,38 @@ function AsesoresPage() {
     setCurrentPage,
   } = useTableParams()
 
-  // Se conectan con el CRUD más adelante
+  const [isFormOpen, setIsFormOpen] = useState(false)
+  const [isSaving, setIsSaving] = useState(false)
+  const [actionError, setActionError] = useState('')
+  const [successMessage, setSuccessMessage] = useState('')
+
+  function handleOpenCreateForm() {
+    setActionError('')
+    setSuccessMessage('')
+    setIsFormOpen(true)
+  }
+
+  function handleCloseForm() {
+    setIsFormOpen(false)
+    setActionError('')
+  }
+
+  async function handleSubmitAsesorForm(formValues) {
+    setIsSaving(true)
+    setActionError('')
+    try {
+      await addAsesor(formValues)
+      setIsFormOpen(false)
+      setSuccessMessage(`Se agregó a ${formValues.firstName} ${formValues.lastName} correctamente.`)
+      setCurrentPage(1)
+    } catch (error) {
+      setActionError(error.message)
+    } finally {
+      setIsSaving(false)
+    }
+  }
+
+  // Se conectan con el CRUD en el paso 3c
   function handleEditAsesor() {}
   function handleDeleteAsesor() {}
 
@@ -50,7 +83,23 @@ function AsesoresPage() {
 
   return (
     <section>
-      <h2>Asesores</h2>
+      <div className="page-header">
+        <h2>Asesores</h2>
+        <button type="button" onClick={handleOpenCreateForm}>+ Agregar asesor</button>
+      </div>
+
+      {successMessage && <p className="success-message">{successMessage}</p>}
+
+      {isFormOpen && (
+        <AsesorForm
+          areas={areas}
+          isSubmitting={isSaving}
+          submitError={actionError}
+          onSubmit={handleSubmitAsesorForm}
+          onCancel={handleCloseForm}
+        />
+      )}
+
       <AsesoresFilters
         searchText={searchText}
         selectedArea={selectedArea}
