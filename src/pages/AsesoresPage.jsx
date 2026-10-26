@@ -7,7 +7,15 @@ import AsesorForm from '../componentes/asesores/AsesorForm'
 import Pagination from '../componentes/asesores/Pagination'
 
 function AsesoresPage() {
-  const { asesores, isLoading, errorMessage, retryLoadAsesores, addAsesor } = useAsesores()
+  const {
+    asesores,
+    isLoading,
+    errorMessage,
+    retryLoadAsesores,
+    addAsesor,
+    editAsesor,
+    removeAsesor,
+  } = useAsesores()
   const {
     searchText,
     selectedArea,
@@ -20,27 +28,47 @@ function AsesoresPage() {
   } = useTableParams()
 
   const [isFormOpen, setIsFormOpen] = useState(false)
+  const [asesorToEdit, setAsesorToEdit] = useState(null)
+  const [pendingAction, setPendingAction] = useState(null)
   const [isSaving, setIsSaving] = useState(false)
   const [actionError, setActionError] = useState('')
   const [successMessage, setSuccessMessage] = useState('')
 
-  function handleOpenCreateForm() {
+  function resetFeedback() {
     setActionError('')
     setSuccessMessage('')
+  }
+
+  function handleOpenCreateForm() {
+    resetFeedback()
+    setAsesorToEdit(null)
     setIsFormOpen(true)
+  }
+
+  function handleOpenEditForm(asesor) {
+    resetFeedback()
+    setAsesorToEdit(asesor)
+    setIsFormOpen(true)
+    window.scrollTo({ top: 0, behavior: 'smooth' })
   }
 
   function handleCloseForm() {
     setIsFormOpen(false)
+    setAsesorToEdit(null)
     setActionError('')
   }
 
   async function handleSubmitAsesorForm(formValues) {
+    if (asesorToEdit) {
+      setPendingAction({ type: 'edit', asesor: asesorToEdit, formValues })
+      return
+    }
+
     setIsSaving(true)
     setActionError('')
     try {
       await addAsesor(formValues)
-      setIsFormOpen(false)
+      handleCloseForm()
       setSuccessMessage(`Se agregó a ${formValues.firstName} ${formValues.lastName} correctamente.`)
       setCurrentPage(1)
     } catch (error) {
@@ -50,9 +78,36 @@ function AsesoresPage() {
     }
   }
 
-  // Se conectan con el CRUD en el paso 3c
-  function handleEditAsesor() {}
-  function handleDeleteAsesor() {}
+  function handleRequestDelete(asesor) {
+    resetFeedback()
+    setPendingAction({ type: 'delete', asesor })
+  }
+
+  function handleCancelPendingAction() {
+    setPendingAction(null)
+  }
+
+  async function handleConfirmPendingAction() {
+    const { type, asesor, formValues } = pendingAction
+
+    setIsSaving(true)
+    setActionError('')
+    try {
+      if (type === 'edit') {
+        await editAsesor(asesor, formValues)
+        handleCloseForm()
+        setSuccessMessage(`Se actualizaron los datos de ${formValues.firstName} ${formValues.lastName}.`)
+      } else {
+        await removeAsesor(asesor)
+        setSuccessMessage(`Se eliminó a ${asesor.firstName} ${asesor.lastName}.`)
+      }
+    } catch (error) {
+      setActionError(error.message)
+    } finally {
+      setIsSaving(false)
+      setPendingAction(null)
+    }
+  }
 
   if (isLoading) return <p>Cargando asesores...</p>
 
@@ -81,6 +136,16 @@ function AsesoresPage() {
   const startIndex = (safeCurrentPage - 1) * pageSize
   const paginatedAsesores = filteredAsesores.slice(startIndex, startIndex + pageSize)
 
+  const isDeleteAction = pendingAction?.type === 'delete'
+  const pendingAsesorName = pendingAction
+    ? `${pendingAction.asesor.firstName} ${pendingAction.asesor.lastName}`
+    : ''
+  const confirmTitle = isDeleteAction ? 'Eliminar asesor' : 'Guardar cambios'
+  const confirmMessage = isDeleteAction
+    ? `¿Seguro que quieres eliminar a ${pendingAsesorName}? Esta acción no se puede deshacer.`
+    : `¿Guardar los cambios de ${pendingAsesorName}?`
+  const confirmText = isDeleteAction ? 'Eliminar' : 'Guardar'
+
   return (
     <section>
       <div className="page-header">
@@ -89,9 +154,24 @@ function AsesoresPage() {
       </div>
 
       {successMessage && <p className="success-message">{successMessage}</p>}
+      {!isFormOpen && actionError && <p className="form-error form-error-box">{actionError}</p>}
+
+      {/* TEMPORAL: se cambia por <ConfirmDialog /> cuando Isaac lo suba */}
+      {pendingAction && (
+        <div className="confirm-box" role="alertdialog" aria-labelledby="confirm-title">
+          <h3 id="confirm-title">{confirmTitle}</h3>
+          <p>{confirmMessage}</p>
+          <button type="button" onClick={handleCancelPendingAction} disabled={isSaving}>Cancelar</button>
+          <button type="button" onClick={handleConfirmPendingAction} disabled={isSaving}>
+            {isSaving ? 'Procesando...' : confirmText}
+          </button>
+        </div>
+      )}
 
       {isFormOpen && (
         <AsesorForm
+          key={asesorToEdit?.id ?? 'nuevo'}
+          asesorToEdit={asesorToEdit}
           areas={areas}
           isSubmitting={isSaving}
           submitError={actionError}
@@ -109,8 +189,8 @@ function AsesoresPage() {
       />
       <AsesoresTable
         asesores={paginatedAsesores}
-        onEditAsesor={handleEditAsesor}
-        onDeleteAsesor={handleDeleteAsesor}
+        onEditAsesor={handleOpenEditForm}
+        onDeleteAsesor={handleRequestDelete}
       />
       <Pagination
         currentPage={safeCurrentPage}
