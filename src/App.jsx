@@ -5,7 +5,7 @@ function App() {
   // Datos del usuario logueado.
   const [user, setUser] = useState(null)
   // Vista activa del sidebar (la usará tu compañero con <Sidebar />)
-  const [activeView, setActiveView] = useState('asesorias')
+  const [activeView, setActiveView] = useState('asesores')
 
   // Se ejecuta cuando LoginPage avise que el login salió bien
   const handleLoginSuccess = (loggedUser) => {
@@ -15,7 +15,7 @@ function App() {
   // Borra la sesión y regresa a la pantalla de login
   const handleLogout = () => {
     setUser(null)
-    setActiveView('asesorias')
+    setActiveView('asesores')
   }
 
   if (!user) {
