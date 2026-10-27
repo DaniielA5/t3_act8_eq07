@@ -4,20 +4,20 @@
   align-items: flex-start;
   gap: 12px;
   padding: 16px;
-  background: #FBEDE8;
-  border: 1px solid #BC6245;
-  border-radius: 10px;
+  background: var(--color-error-bg);
+  border: 1px solid var(--color-accent);
+  border-radius: var(--radius-sm);
 }
 
-.error-message-text { margin: 0; color: #8A3A22; font-size: 14px; }
+.error-message-text { margin: 0; color: var(--color-error-text); font-size: 14px; }
 
 .error-message-retry {
   height: 36px;
   padding: 0 16px;
   border: none;
-  border-radius: 10px;
-  background: #BC6245;
-  color: #F2EDE4;
+  border-radius: var(--radius-sm);
+  background: var(--color-accent);
+  color: var(--color-accent-ink);
   font-weight: 600;
   cursor: pointer;
 }

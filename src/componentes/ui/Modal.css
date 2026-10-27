@@ -1,7 +1,7 @@
 .modal-overlay {
   position: fixed;
   inset: 0;
-  background: rgba(38, 49, 40, 0.6);
+  background: var(--color-overlay);
   display: flex;
   align-items: center;
   justify-content: center;
@@ -12,9 +12,9 @@
   width: 100%;
   max-width: 480px;
   margin: 16px;
-  background: #FBF7EF;
-  border: 1px solid #DED5C2;
-  border-radius: 18px;
+  background: var(--color-surface);
+  border: 1px solid var(--color-line);
+  border-radius: var(--radius-lg);
   padding: 24px;
 }
 
@@ -25,12 +25,12 @@
   margin-bottom: 16px;
 }
 
-.modal-title { margin: 0; font-size: 20px; color: #263128; }
+.modal-title { margin: 0; font-size: 20px; color: var(--color-text); }
 
 .modal-close {
   border: none;
   background: transparent;
   font-size: 18px;
-  color: #263128;
+  color: var(--color-text);
   cursor: pointer;
 }
