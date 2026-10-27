@@ -1,0 +1,30 @@
+.table-filters {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 12px;
+  margin-bottom: 16px;
+}
+
+.filter-input,
+.filter-select {
+  height: 44px;
+  padding: 0 14px;
+  border: 1px solid var(--color-line);
+  border-radius: var(--radius-sm);
+  background: var(--color-surface);
+  color: var(--color-text);
+  font-size: 14px;
+}
+
+.filter-input {
+  flex: 1;
+  min-width: 220px;
+}
+
+.filter-select { min-width: 200px; }
+
+.filter-input:focus,
+.filter-select:focus {
+  outline: 2px solid var(--color-accent);
+  outline-offset: 1px;
+}

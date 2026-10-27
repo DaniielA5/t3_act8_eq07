@@ -1,4 +1,5 @@
 import { PAGE_SIZE_OPTIONS } from '../../hooks/useTableParams'
+import './Pagination.css'
 
 function Pagination({ currentPage, totalPages, pageSize, totalItems, onPageChange, onPageSizeChange }) {
   const firstItem = totalItems === 0 ? 0 : (currentPage - 1) * pageSize + 1
@@ -13,21 +14,29 @@ function Pagination({ currentPage, totalPages, pageSize, totalItems, onPageChang
       </p>
 
       <label className="pagination-size">
-        Mostrar{' '}
+        Mostrar
         <select value={pageSize} onChange={(event) => onPageSizeChange(Number(event.target.value))}>
           {PAGE_SIZE_OPTIONS.map((option) => (
             <option key={option} value={option}>{option}</option>
           ))}
-        </select>{' '}
+        </select>
         por página
       </label>
 
       <div className="pagination-controls">
-        <button type="button" onClick={() => onPageChange(1)} disabled={isFirstPage}>« Primera</button>
-        <button type="button" onClick={() => onPageChange(currentPage - 1)} disabled={isFirstPage}>‹ Anterior</button>
-        <span>Página {currentPage} de {totalPages}</span>
-        <button type="button" onClick={() => onPageChange(currentPage + 1)} disabled={isLastPage}>Siguiente ›</button>
-        <button type="button" onClick={() => onPageChange(totalPages)} disabled={isLastPage}>Última »</button>
+        <button className="pagination-button" type="button" onClick={() => onPageChange(1)} disabled={isFirstPage}>
+          « Primera
+        </button>
+        <button className="pagination-button" type="button" onClick={() => onPageChange(currentPage - 1)} disabled={isFirstPage}>
+          ‹ Anterior
+        </button>
+        <span className="pagination-current">Página {currentPage} de {totalPages}</span>
+        <button className="pagination-button" type="button" onClick={() => onPageChange(currentPage + 1)} disabled={isLastPage}>
+          Siguiente ›
+        </button>
+        <button className="pagination-button" type="button" onClick={() => onPageChange(totalPages)} disabled={isLastPage}>
+          Última »
+        </button>
       </div>
     </div>
   )
