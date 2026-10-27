@@ -1,0 +1,30 @@
+:root {
+  /* Colores base (60%) */
+  --color-bg: #F2EDE4;
+  --color-surface: #FBF7EF;
+  --color-line: #DED5C2;
+
+  /* Secundario (30%): sidebar y titulares */
+  --color-primary: #263128;
+  --color-primary-ink: #F2EDE4;
+
+  /* Acento (10%): botones y opción activa */
+  --color-accent: #BC6245;
+  --color-accent-ink: #F2EDE4;
+
+  /* Texto y estados */
+  --color-text: #263128;
+  --color-text-muted: #6b6b5f;
+  --color-danger: #C0392B;
+  --color-error-bg: #FBEDE8;
+  --color-error-text: #8A3A22;
+  --color-danger-ink: #FFFFFF;
+  --color-overlay: rgba(38, 49, 40, 0.6);
+
+  /* Tipografía */
+  --font-main: Inter, system-ui, sans-serif;
+
+  /* Bordes redondeados (múltiplos de 2 del Figma) */
+  --radius-sm: 10px;
+  --radius-lg: 18px;
+}
