@@ -1,0 +1,51 @@
+.asesores-page {
+  max-width: 1200px;
+}
+
+.page-header {
+  display: flex;
+  flex-wrap: wrap;
+  align-items: center;
+  justify-content: space-between;
+  gap: 16px;
+  margin-bottom: 20px;
+}
+
+.page-title {
+  margin: 0;
+  font-size: 26px;
+  color: var(--color-text);
+}
+
+.page-subtitle {
+  margin: 4px 0 0;
+  font-size: 14px;
+  color: var(--color-text-muted);
+}
+
+.page-add-button {
+  height: 44px;
+  padding: 0 20px;
+  border: none;
+  border-radius: var(--radius-sm);
+  background: var(--color-accent);
+  color: var(--color-accent-ink);
+  font-size: 15px;
+  font-weight: 600;
+  cursor: pointer;
+}
+
+.page-add-button:hover { filter: brightness(0.95); }
+
+.success-message {
+  margin: 0 0 16px;
+  padding: 12px 16px;
+  border: 1px solid var(--color-primary);
+  border-radius: var(--radius-sm);
+  background: var(--color-surface);
+  color: var(--color-primary);
+  font-size: 14px;
+}
+
+/* Separa el ErrorMessage de Isaac del contenido cuando aparece en la página */
+.asesores-page > .error-message { margin-bottom: 16px; }

@@ -21,7 +21,7 @@ function Modal({ isOpen, title, onClose, children }) {
   return (
     // Clic en el fondo oscuro cierra el modal
     <div className="modal-overlay" onClick={onClose}>
-      {}
+      {/* stopPropagation: un clic dentro de la ventana no debe cerrarla */}
       <div
         className="modal-window"
         role="dialog"

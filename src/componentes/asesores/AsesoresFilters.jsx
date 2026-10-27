@@ -1,7 +1,10 @@
+import './AsesoresFilters.css'
+
 function AsesoresFilters({ searchText, selectedArea, areas, onSearchTextChange, onAreaChange }) {
   return (
     <div className="table-filters">
       <input
+        className="filter-input"
         type="search"
         placeholder="Buscar por nombre o correo..."
         aria-label="Buscar asesor"
@@ -10,6 +13,7 @@ function AsesoresFilters({ searchText, selectedArea, areas, onSearchTextChange, 
       />
 
       <select
+        className="filter-select"
         aria-label="Filtrar por área"
         value={selectedArea}
         onChange={(event) => onAreaChange(event.target.value)}

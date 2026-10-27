@@ -1,4 +1,5 @@
 import { useState } from 'react'
+import './AsesorForm.css'
 
 const TEXT_FIELDS = [
   { name: 'firstName', label: 'Nombre', type: 'text' },
@@ -82,8 +83,8 @@ function AsesorForm({ asesorToEdit, areas, isSubmitting, submitError, onSubmit, 
       {submitError && <p className="form-error form-error-box">{submitError}</p>}
 
       <div className="form-actions">
-        <button type="button" onClick={onCancel} disabled={isSubmitting}>Cancelar</button>
-        <button type="submit" disabled={isSubmitting}>
+        <button className="form-cancel" type="button" onClick={onCancel} disabled={isSubmitting}>Cancelar</button>
+        <button className="form-submit" type="submit" disabled={isSubmitting}>
           {isSubmitting ? 'Guardando...' : submitLabel}
         </button>
       </div>
