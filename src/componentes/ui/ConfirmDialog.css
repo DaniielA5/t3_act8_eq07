@@ -1,0 +1,40 @@
+.confirm-message {
+  margin: 0 0 24px;
+  color: #263128;
+  font-size: 15px;
+}
+
+.confirm-actions {
+  display: flex;
+  justify-content: flex-end;
+  gap: 8px;
+}
+
+.confirm-button {
+  height: 40px;
+  padding: 0 16px;
+  border-radius: 10px;
+  font-size: 14px;
+  font-weight: 600;
+  cursor: pointer;
+}
+
+.confirm-cancel {
+  background: transparent;
+  border: 1px solid #DED5C2;
+  color: #263128;
+}
+
+.confirm-primary {
+  background: #BC6245;
+  border: none;
+  color: #F2EDE4;
+}
+
+.confirm-danger {
+  background: #C0392B;
+  border: none;
+  color: #fff;
+}
+
+.confirm-button:disabled { opacity: 0.6; cursor: not-allowed; }
