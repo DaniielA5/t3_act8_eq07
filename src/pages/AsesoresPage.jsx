@@ -5,6 +5,11 @@ import AsesoresFilters from '../componentes/asesores/AsesoresFilters'
 import AsesoresTable from '../componentes/asesores/AsesoresTable'
 import AsesorForm from '../componentes/asesores/AsesorForm'
 import Pagination from '../componentes/asesores/Pagination'
+import ConfirmDialog from '../componentes/ui/ConfirmDialog'
+import ErrorMessage from '../componentes/ui/ErrorMessage'
+import Loader from '../componentes/ui/Loader'
+import Modal from '../componentes/ui/Modal'
+import './AsesoresPage.css'
 
 function AsesoresPage() {
   const {
@@ -49,13 +54,19 @@ function AsesoresPage() {
     resetFeedback()
     setAsesorToEdit(asesor)
     setIsFormOpen(true)
-    window.scrollTo({ top: 0, behavior: 'smooth' })
   }
 
   function handleCloseForm() {
     setIsFormOpen(false)
     setAsesorToEdit(null)
     setActionError('')
+  }
+
+  // El Modal también se cierra con Escape o clic en el fondo: no se permite mientras
+  // se guarda o mientras la confirmación de edición está abierta encima del formulario
+  function handleRequestCloseForm() {
+    if (isSaving || pendingAction) return
+    handleCloseForm()
   }
 
   async function handleSubmitAsesorForm(formValues) {
@@ -84,6 +95,7 @@ function AsesoresPage() {
   }
 
   function handleCancelPendingAction() {
+    if (isSaving) return
     setPendingAction(null)
   }
 
@@ -109,16 +121,9 @@ function AsesoresPage() {
     }
   }
 
-  if (isLoading) return <p>Cargando asesores...</p>
+  if (isLoading) return <Loader text="Cargando asesores..." />
 
-  if (errorMessage) {
-    return (
-      <div>
-        <p>{errorMessage}</p>
-        <button type="button" onClick={retryLoadAsesores}>Reintentar</button>
-      </div>
-    )
-  }
+  if (errorMessage) return <ErrorMessage message={errorMessage} onRetry={retryLoadAsesores} />
 
   const areas = [...new Set(asesores.map((asesor) => asesor.company?.department).filter(Boolean))].sort()
 
@@ -147,38 +152,19 @@ function AsesoresPage() {
   const confirmText = isDeleteAction ? 'Eliminar' : 'Guardar'
 
   return (
-    <section>
+    <section className="asesores-page">
       <div className="page-header">
-        <h2>Asesores</h2>
-        <button type="button" onClick={handleOpenCreateForm}>+ Agregar asesor</button>
+        <div>
+          <h1 className="page-title">Asesores</h1>
+          <p className="page-subtitle">Administra a los asesores de la plataforma.</p>
+        </div>
+        <button className="page-add-button" type="button" onClick={handleOpenCreateForm}>
+          + Agregar asesor
+        </button>
       </div>
 
-      {successMessage && <p className="success-message">{successMessage}</p>}
-      {!isFormOpen && actionError && <p className="form-error form-error-box">{actionError}</p>}
-
-      {/* TEMPORAL: se cambia por <ConfirmDialog /> cuando Isaac lo suba */}
-      {pendingAction && (
-        <div className="confirm-box" role="alertdialog" aria-labelledby="confirm-title">
-          <h3 id="confirm-title">{confirmTitle}</h3>
-          <p>{confirmMessage}</p>
-          <button type="button" onClick={handleCancelPendingAction} disabled={isSaving}>Cancelar</button>
-          <button type="button" onClick={handleConfirmPendingAction} disabled={isSaving}>
-            {isSaving ? 'Procesando...' : confirmText}
-          </button>
-        </div>
-      )}
-
-      {isFormOpen && (
-        <AsesorForm
-          key={asesorToEdit?.id ?? 'nuevo'}
-          asesorToEdit={asesorToEdit}
-          areas={areas}
-          isSubmitting={isSaving}
-          submitError={actionError}
-          onSubmit={handleSubmitAsesorForm}
-          onCancel={handleCloseForm}
-        />
-      )}
+      {successMessage && <p className="success-message" role="status">{successMessage}</p>}
+      {!isFormOpen && actionError && <ErrorMessage message={actionError} />}
 
       <AsesoresFilters
         searchText={searchText}
@@ -199,6 +185,33 @@ function AsesoresPage() {
         totalItems={filteredAsesores.length}
         onPageChange={setCurrentPage}
         onPageSizeChange={setPageSize}
+      />
+
+      <Modal
+        isOpen={isFormOpen}
+        title={asesorToEdit ? 'Editar asesor' : 'Agregar asesor'}
+        onClose={handleRequestCloseForm}
+      >
+        <AsesorForm
+          key={asesorToEdit?.id ?? 'nuevo'}
+          asesorToEdit={asesorToEdit}
+          areas={areas}
+          isSubmitting={isSaving}
+          submitError={actionError}
+          onSubmit={handleSubmitAsesorForm}
+          onCancel={handleRequestCloseForm}
+        />
+      </Modal>
+
+      <ConfirmDialog
+        isOpen={Boolean(pendingAction)}
+        title={confirmTitle}
+        message={confirmMessage}
+        confirmText={confirmText}
+        onConfirm={handleConfirmPendingAction}
+        onCancel={handleCancelPendingAction}
+        isConfirming={isSaving}
+        isDanger={isDeleteAction}
       />
     </section>
   )
