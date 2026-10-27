@@ -1,5 +1,6 @@
 import { useState } from 'react'
 import LoginPage from './pages/LoginPage'
+import DashboardPage from './pages/DashboardPage'
 
 function App() {
   // Datos del usuario logueado.
@@ -24,12 +25,12 @@ function App() {
 
   // TEMPORAL: aquí tu compañero pondrá <Navbar />, <Sidebar /> y la tabla
   return (
-    <div>
-      <h1>Bienvenido, {user.firstName}</h1>
-      <img src={user.image} alt={user.username} width="64" />
-      <p>Vista activa: {activeView}</p>
-      <button onClick={handleLogout}>Cerrar sesión</button>
-    </div>
+    <DashboardPage
+      user={user}
+      activeView={activeView}
+      onNavigate={setActiveView}
+      onLogout={handleLogout}
+    />
   )
 }
 
