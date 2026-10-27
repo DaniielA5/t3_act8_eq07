@@ -18,6 +18,8 @@
   --color-danger: #C0392B;
   --color-error-bg: #FBEDE8;
   --color-error-text: #8A3A22;
+  --color-danger-ink: #FFFFFF;
+  --color-overlay: rgba(38, 49, 40, 0.6);
 
   /* Tipografía */
   --font-main: Inter, system-ui, sans-serif;
