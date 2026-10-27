@@ -4,7 +4,7 @@ Mini sistema en React: login con DummyJSON, panel con sidebar/navbar y tabla de 
 
 ## Integrantes
 - Daniel Juarez — [@DaniielA5](https://github.com/DaniielA5)
-- [Tu nombre completo] — [@Isaac051225](https://github.com/Isaac051225)
+- Isaac Emanuel - [@Isaac051225](https://github.com/Isaac051225)
 
 ## API utilizada
 - Login: DummyJSON Auth (`https://dummyjson.com/auth/login`)
