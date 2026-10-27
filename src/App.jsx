@@ -5,7 +5,7 @@ import DashboardPage from './pages/DashboardPage'
 function App() {
   // Datos del usuario logueado.
   const [user, setUser] = useState(null)
-  // Vista activa del sidebar (la usará tu compañero con <Sidebar />)
+  // Vista activa del sidebar: 'inicio', 'asesores' o 'mis-asesorias'
   const [activeView, setActiveView] = useState('asesores')
 
   // Se ejecuta cuando LoginPage avise que el login salió bien
@@ -23,7 +23,7 @@ function App() {
     return <LoginPage onLoginSuccess={handleLoginSuccess} />
   }
 
-  // TEMPORAL: aquí tu compañero pondrá <Navbar />, <Sidebar /> y la tabla
+  // Con sesión iniciada se muestra el sistema: sidebar, navbar y la vista activa
   return (
     <DashboardPage
       user={user}

@@ -9,7 +9,7 @@ export async function loginUser(username, password) {
   } catch (error) {
     // DummyJSON responde 400 cuando las credenciales no son válidas
     if (error.status === 400) {
-      throw new Error('Usuario o contraseña incorrectos.')
+      throw new Error('Usuario o contraseña incorrectos.', { cause: error })
     }
     throw error
   }
