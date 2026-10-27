@@ -1,16 +1,13 @@
 import Sidebar from '../componentes/layout/Sidebar'
 import Navbar from '../componentes/layout/Navbar'
+import AsesoresPage from './AsesoresPage'
 import './DashboardPage.css'
-
-// TEMPORAL: cuando AsesoresPage.jsx esté listo, se importa y se usa aquí
-// import AsesoresPage from './AsesoresPage'
 
 function DashboardPage({ user, activeView, onNavigate, onLogout }) {
   // Decide qué se muestra en el centro según la vista activa del sidebar
   const renderContent = () => {
     if (activeView === 'asesores') {
-      // TEMPORAL: reemplazar por <AsesoresPage />
-      return <p>Aquí irá la tabla de asesores.</p>
+      return <AsesoresPage />
     }
     if (activeView === 'inicio') {
       return <p>Bienvenido, {user.firstName}.</p>
