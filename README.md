@@ -112,19 +112,19 @@ ssh root@165.22.188.79 "chmod -R u=rwX,go=rX /var/www/html/t3_act8_eq07"
 
 ## Diseño en Figma
 
-Mockup de la Actividad 7 que sirvió de base para el proyecto: [ver prototipo en Figma](PEGA_AQUI_EL_LINK)
+Mockup de la Actividad 7 que sirvió de base para el proyecto: [ver prototipo en Figma] https://www.figma.com/design/Ibm7b85izfPN6iETO4eqrj/Asesorias?node-id=20-111&t=mB07LunZmmz4Kci0-1
 
 ### Login
 Pantalla de inicio de sesión con usuario y contraseña, siguiendo la paleta del diseño.
 
-![Login](docs/img/figma-login.png)
+![Login](docs_img/figma-login.png)
 
 ### Dashboard
 Vista principal con sidebar, navbar con foto y nombre del usuario, y área de contenido.
 
-![Dashboard](docs/img/figma-dashboard.png)
+![Dashboard](docs_img/figma-dashboard.png)
 
 ### Catálogo
 Tabla de asesorías con filtros, paginación y controles de acciones.
 
-![Catálogo](docs/img/figma-catalogo.png)
+![Catálogo](docs_img/figma-catalogo.png)
