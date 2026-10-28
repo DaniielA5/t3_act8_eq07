@@ -107,3 +107,24 @@ ssh root@165.22.188.79 "chmod -R u=rwX,go=rX /var/www/html/t3_act8_eq07"
 
 - Cada integrante trabajó en sus propias ramas (`feat/login`, `feat/ui-components`, `feat/layout`, `feat/estilos`, `feat/tabla`, …) con su propio usuario de GitHub.
 - Los cambios se integraron a `main` mediante Pull Requests.
+
+
+
+## Diseño en Figma
+
+Mockup de la Actividad 7 que sirvió de base para el proyecto: [ver prototipo en Figma](PEGA_AQUI_EL_LINK)
+
+### Login
+Pantalla de inicio de sesión con usuario y contraseña, siguiendo la paleta del diseño.
+
+![Login](docs/img/figma-login.png)
+
+### Dashboard
+Vista principal con sidebar, navbar con foto y nombre del usuario, y área de contenido.
+
+![Dashboard](docs/img/figma-dashboard.png)
+
+### Catálogo
+Tabla de asesorías con filtros, paginación y controles de acciones.
+
+![Catálogo](docs/img/figma-catalogo.png)
